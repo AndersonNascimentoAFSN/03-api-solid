@@ -8,7 +8,7 @@ interface UsersServicesParams {
   password: string
 }
 
-export class UsersServices {
+export class RegisterUsersServices {
   // SOLID
   // D - Dependency Inversion Principle
 
