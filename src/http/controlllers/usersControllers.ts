@@ -2,7 +2,7 @@ import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 
 import { UsersServices } from '@/services/usersServices'
-import { UsersRepositoryPrisma } from '@/repositories/usersRepositoryPrisma'
+import { UsersRepositoryPrisma } from '@/repositories/prisma/usersRepositoryPrisma'
 
 export async function usersControllers(
   request: FastifyRequest,
