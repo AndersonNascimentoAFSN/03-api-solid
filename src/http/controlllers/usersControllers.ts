@@ -3,6 +3,7 @@ import { z } from 'zod'
 
 import { UsersServices } from '@/services/usersServices'
 import { UsersRepositoryPrisma } from '@/repositories/prisma/usersRepositoryPrisma'
+import { UserAlreadyExistsError } from '@/services/errors/userAlreadyExistsEmailError'
 
 export async function usersControllers(
   request: FastifyRequest,
@@ -26,7 +27,15 @@ export async function usersControllers(
       password,
     })
   } catch (error) {
-    return reply.status(409).send()
+    if (error instanceof UserAlreadyExistsError) {
+      return reply.status(409).send({
+        message: error.message,
+        error: 'Conflict',
+        statusCode: 409,
+      })
+    }
+
+    throw error
   }
 
   return reply.status(201).send()

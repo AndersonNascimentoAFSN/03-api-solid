@@ -1,5 +1,6 @@
 import { UsersRepository } from '@/interfaces/usersRepository'
 import { createHashPassword } from '@/utils/createHashPassword'
+import { UserAlreadyExistsError } from './errors/userAlreadyExistsEmailError'
 
 interface UsersServicesParams {
   name: string
@@ -25,7 +26,7 @@ export class UsersServices {
     })
 
     if (userWithSameEmail) {
-      throw new Error('E-mail already exists')
+      throw new UserAlreadyExistsError()
     }
 
     await this.usersRepository.createUsers({
