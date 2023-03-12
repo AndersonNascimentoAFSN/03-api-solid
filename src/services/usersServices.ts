@@ -1,4 +1,3 @@
-import { UsersRepository } from '@/repositories/usersRepository'
 import { hash } from 'bcryptjs'
 
 interface UsersServicesParams {
@@ -7,24 +6,31 @@ interface UsersServicesParams {
   password: string
 }
 
-export async function usersServices({
-  name,
-  email,
-  password,
-}: UsersServicesParams) {
-  const usersRepository = new UsersRepository()
+export class UsersServices {
+  // SOLID
+  // D - Dependency Inversion Principle
 
-  const password_hash = await hash(password, 6)
+  private usersRepository: any
 
-  const userWithSameEmail = await usersRepository.findUserByEmail({ email })
-
-  if (userWithSameEmail) {
-    throw new Error('E-mail already exists')
+  constructor(usersRepository: any) {
+    this.usersRepository = usersRepository
   }
 
-  await usersRepository.createUsers({
-    name,
-    email,
-    password_hash,
-  })
+  async createUsers({ name, email, password }: UsersServicesParams) {
+    const password_hash = await hash(password, 6)
+
+    const userWithSameEmail = await this.usersRepository.findUserByEmail({
+      email,
+    })
+
+    if (userWithSameEmail) {
+      throw new Error('E-mail already exists')
+    }
+
+    await this.usersRepository.createUsers({
+      name,
+      email,
+      password_hash,
+    })
+  }
 }
