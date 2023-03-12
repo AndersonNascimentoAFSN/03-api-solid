@@ -1,9 +1,12 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 
-import { registerServices } from '@/services/register'
+import { usersServices } from '@/services/usersServices'
 
-export async function register(request: FastifyRequest, reply: FastifyReply) {
+export async function usersControllers(
+  request: FastifyRequest,
+  reply: FastifyReply,
+) {
   const registerBodySchema = z.object({
     name: z.string(),
     email: z.string().email(),
@@ -13,7 +16,7 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
   const { email, name, password } = registerBodySchema.parse(request.body)
 
   try {
-    await registerServices({
+    await usersServices({
       name,
       email,
       password,
