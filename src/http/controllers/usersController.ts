@@ -41,4 +41,10 @@ export class UsersController {
 
     return reply.status(201).send()
   }
+
+  async listUsers(_request: FastifyRequest, reply: FastifyReply) {
+    const users = await this.usersService.findUsers()
+
+    return reply.status(200).send(users)
+  }
 }

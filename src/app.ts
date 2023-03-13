@@ -2,7 +2,6 @@ import fastify, { FastifyError, FastifyReply, FastifyRequest } from 'fastify'
 import { ZodError } from 'zod'
 import { env } from './env'
 import { appRoutes } from './http/routes'
-import { prisma } from './lib/prisma'
 
 export const app = fastify()
 
@@ -27,9 +26,3 @@ app.setErrorHandler(
       .send({ message: 'Internal Server Error', statusCode: 500 })
   },
 )
-
-app.get('/users', async (request, reply) => {
-  const users = await prisma.user.findMany()
-
-  return reply.status(200).send({ users })
-})

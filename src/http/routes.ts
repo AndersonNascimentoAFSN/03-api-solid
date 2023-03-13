@@ -5,4 +5,5 @@ import { makeUsersController } from './controllers/factories/makeUsersController
 export async function appRoutes(app: FastifyInstance) {
   const usersController = makeUsersController()
   app.post('/users', (req, reply) => usersController.registerUser(req, reply))
+  app.get('/users', (req, reply) => usersController.listUsers(req, reply))
 }

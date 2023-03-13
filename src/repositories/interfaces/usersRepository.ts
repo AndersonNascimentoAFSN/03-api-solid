@@ -6,5 +6,6 @@ type Email = {
 
 export interface UsersRepository {
   createUsers(data: Prisma.UserCreateInput): Promise<User>
+  findUsers(): Promise<User[]>
   findUserByEmail({ email }: Email): Promise<User | null>
 }

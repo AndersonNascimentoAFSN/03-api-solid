@@ -1,6 +1,6 @@
 import { User } from '@prisma/client'
 
-import { UsersRepository } from '@/interfaces/usersRepository'
+import { UsersRepository } from '@/repositories/interfaces/usersRepository'
 import { createHashPassword } from '@/utils/createHashPassword'
 import { UserAlreadyExistsError } from './errors/userAlreadyExistsEmailError'
 
@@ -46,5 +46,11 @@ export class UsersServices {
     })
 
     return { user: userCreated }
+  }
+
+  async findUsers() {
+    const users = await this.usersRepository.findUsers()
+
+    return { users }
   }
 }
