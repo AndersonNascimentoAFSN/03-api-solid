@@ -10,11 +10,11 @@ interface UsersServicesParams {
   password: string
 }
 
-interface RegisterUsersServicesResponse {
+interface UsersServicesResponse {
   user: User
 }
 
-export class RegisterUsersServices {
+export class UsersServices {
   // SOLID
   // D - Dependency Inversion Principle
 
@@ -28,7 +28,7 @@ export class RegisterUsersServices {
     name,
     email,
     password,
-  }: UsersServicesParams): Promise<RegisterUsersServicesResponse> {
+  }: UsersServicesParams): Promise<UsersServicesResponse> {
     const password_hash = await createHashPassword(password)
 
     const userWithSameEmail = await this.usersRepository.findUserByEmail({

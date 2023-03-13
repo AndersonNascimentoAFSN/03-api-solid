@@ -3,12 +3,12 @@ import { compare } from 'bcryptjs'
 import { describe, it, expect } from 'vitest'
 import { UserAlreadyExistsError } from './errors/userAlreadyExistsEmailError'
 
-import { RegisterUsersServices } from './registerUsersServices'
+import { UsersServices } from './usersServices'
 
 describe('Register User Service', () => {
   it('should be able to register', async () => {
     const usersRepository = new InMemoryUsersRepository()
-    const registerUserService = new RegisterUsersServices(usersRepository)
+    const registerUserService = new UsersServices(usersRepository)
 
     const { user } = await registerUserService.createUsers({
       name: 'Yanni Nascimento',
@@ -27,7 +27,7 @@ describe('Register User Service', () => {
 
   it('should hash user password upon registration', async () => {
     const usersRepository = new InMemoryUsersRepository()
-    const registerUserService = new RegisterUsersServices(usersRepository)
+    const registerUserService = new UsersServices(usersRepository)
 
     const { user } = await registerUserService.createUsers({
       name: 'Yanni Nascimento',
@@ -45,7 +45,7 @@ describe('Register User Service', () => {
 
   it('should not be able to register with same email twice', async () => {
     const usersRepository = new InMemoryUsersRepository()
-    const registerUserService = new RegisterUsersServices(usersRepository)
+    const registerUserService = new UsersServices(usersRepository)
 
     const email = 'johndoe@example.com'
 
