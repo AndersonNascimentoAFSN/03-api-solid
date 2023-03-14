@@ -1,16 +1,22 @@
-import { InMemoryUsersRepository } from '@/repositories/in-memory/inMemoryUsersRepository'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { compare } from 'bcryptjs'
-import { describe, it, expect } from 'vitest'
+
 import { UserAlreadyExistsError } from './errors/userAlreadyExistsEmailError'
 
 import { UsersServices } from './usersServices'
+import { InMemoryUsersRepository } from '@/repositories/in-memory/inMemoryUsersRepository'
+
+let usersRepository: InMemoryUsersRepository
+let userService: UsersServices
 
 describe('Register User Service', () => {
-  it('should be able to register', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const registerUserService = new UsersServices(usersRepository)
+  beforeEach(() => {
+    usersRepository = new InMemoryUsersRepository()
+    userService = new UsersServices(usersRepository)
+  })
 
-    const { user } = await registerUserService.createUsers({
+  it('should be able to register', async () => {
+    const { user } = await userService.createUsers({
       name: 'Yanni Nascimento',
       email: 'yanni.nascimento@meta.com.br',
       password: 'Senha@123',
@@ -26,10 +32,7 @@ describe('Register User Service', () => {
   })
 
   it('should hash user password upon registration', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const registerUserService = new UsersServices(usersRepository)
-
-    const { user } = await registerUserService.createUsers({
+    const { user } = await userService.createUsers({
       name: 'Yanni Nascimento',
       email: 'yanni.nascimento@meta.com.br',
       password: 'Senha@123',
@@ -44,19 +47,16 @@ describe('Register User Service', () => {
   })
 
   it('should not be able to register with same email twice', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const registerUserService = new UsersServices(usersRepository)
-
     const email = 'johndoe@example.com'
 
-    await registerUserService.createUsers({
+    await userService.createUsers({
       name: 'Yanni Nascimento',
       email,
       password: 'Senha@123',
     })
 
     await expect(() =>
-      registerUserService.createUsers({
+      userService.createUsers({
         name: 'Yanni Nascimento',
         email,
         password: 'Senha@123',
@@ -66,10 +66,12 @@ describe('Register User Service', () => {
 })
 
 describe('List User Service', () => {
-  it('should be list users', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const userService = new UsersServices(usersRepository)
+  beforeEach(() => {
+    usersRepository = new InMemoryUsersRepository()
+    userService = new UsersServices(usersRepository)
+  })
 
+  it('should be list users', async () => {
     await userService.createUsers({
       name: 'Yanni Nascimento',
       email: 'yanni.nascimento@meta.com.br',
@@ -87,9 +89,6 @@ describe('List User Service', () => {
   })
 
   it('should be list empty', async () => {
-    const usersRepository = new InMemoryUsersRepository()
-    const userService = new UsersServices(usersRepository)
-
     const users = await userService.findUsers()
 
     expect(users).toStrictEqual([])
