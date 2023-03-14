@@ -51,6 +51,6 @@ export class UsersServices {
   async findUsers() {
     const users = await this.usersRepository.findUsers()
 
-    return { users }
+    return users
   }
 }

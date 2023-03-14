@@ -64,3 +64,34 @@ describe('Register User Service', () => {
     ).rejects.toBeInstanceOf(UserAlreadyExistsError)
   })
 })
+
+describe('List User Service', () => {
+  it('should be list users', async () => {
+    const usersRepository = new InMemoryUsersRepository()
+    const userService = new UsersServices(usersRepository)
+
+    await userService.createUsers({
+      name: 'Yanni Nascimento',
+      email: 'yanni.nascimento@meta.com.br',
+      password: 'Senha@123',
+    })
+
+    const users = await userService.findUsers()
+
+    expect(users[0]).toEqual(
+      expect.objectContaining({
+        name: 'Yanni Nascimento',
+        email: 'yanni.nascimento@meta.com.br',
+      }),
+    )
+  })
+
+  it('should be list empty', async () => {
+    const usersRepository = new InMemoryUsersRepository()
+    const userService = new UsersServices(usersRepository)
+
+    const users = await userService.findUsers()
+
+    expect(users).toStrictEqual([])
+  })
+})
