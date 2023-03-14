@@ -10,7 +10,7 @@ export type CheckInServiceResponse = {
 }
 
 export interface InterfaceCheckInService {
-  checkin({
+  checkIn({
     userId,
     gymId,
   }: CheckInServiceRequest): Promise<CheckInServiceResponse>

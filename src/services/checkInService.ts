@@ -13,7 +13,7 @@ export class CheckInService implements InterfaceCheckInService {
     this.checkInRepository = checkInRepository
   }
 
-  async checkin({
+  async checkIn({
     userId,
     gymId,
   }: CheckInServiceRequest): Promise<CheckInServiceResponse> {
