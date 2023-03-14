@@ -3,15 +3,28 @@ import { User } from '@prisma/client'
 import { UsersRepository } from '@/repositories/interfaces/usersRepository'
 import { createHashPassword } from '@/utils/createHashPassword'
 import { UserAlreadyExistsError } from './errors/userAlreadyExistsEmailError'
+import { ResourceNotFoundError } from './errors/resourceNotFound'
 
-interface UsersServicesParams {
+interface CreateUsersRequest {
   name: string
   email: string
   password: string
 }
 
-interface UsersServicesResponse {
+interface CreateUsersResponse {
   user: User
+}
+
+interface GetUserProfileRequest {
+  userId: string
+}
+
+interface GetUserProfileResponse {
+  user: User
+}
+
+interface GetUsersProfilesResponse {
+  users: User[]
 }
 
 export class UsersServices {
@@ -28,7 +41,7 @@ export class UsersServices {
     name,
     email,
     password,
-  }: UsersServicesParams): Promise<UsersServicesResponse> {
+  }: CreateUsersRequest): Promise<CreateUsersResponse> {
     const password_hash = await createHashPassword(password)
 
     const userWithSameEmail = await this.usersRepository.findUserByEmail({
@@ -48,9 +61,21 @@ export class UsersServices {
     return { user: userCreated }
   }
 
-  async findUsers() {
+  async GetUsersProfiles(): Promise<GetUsersProfilesResponse> {
     const users = await this.usersRepository.findUsers()
 
-    return users
+    return { users }
+  }
+
+  async getUserProfile({
+    userId,
+  }: GetUserProfileRequest): Promise<GetUserProfileResponse> {
+    const user = await this.usersRepository.findUserById(userId)
+
+    if (!user) {
+      throw new ResourceNotFoundError()
+    }
+
+    return { user }
   }
 }

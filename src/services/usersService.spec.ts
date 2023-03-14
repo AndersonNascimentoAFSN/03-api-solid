@@ -78,7 +78,7 @@ describe('List User Service', () => {
       password: 'Senha@123',
     })
 
-    const users = await userService.findUsers()
+    const { users } = await userService.GetUsersProfiles()
 
     expect(users[0]).toEqual(
       expect.objectContaining({
@@ -89,7 +89,7 @@ describe('List User Service', () => {
   })
 
   it('should be list empty', async () => {
-    const users = await userService.findUsers()
+    const { users } = await userService.GetUsersProfiles()
 
     expect(users).toStrictEqual([])
   })
