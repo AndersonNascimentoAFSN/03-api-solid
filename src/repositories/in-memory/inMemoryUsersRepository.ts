@@ -21,24 +21,7 @@ export class InMemoryUsersRepository implements UsersRepository {
   }
 
   async findUsers() {
-    const users = [
-      {
-        id: 'user-1',
-        name: 'Jhon Duo',
-        email: 'john.duo@email.com',
-        password_hash: 'dakjsdkljaklsjld',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-      {
-        id: 'user-2',
-        name: 'Jhon Snow',
-        email: 'john.Snow@email.com',
-        password_hash: 'dakjsdkljaklsjld',
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
-    ]
+    const users = this.items
 
     return users
   }
