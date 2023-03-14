@@ -1,33 +1,17 @@
-import { User } from '@prisma/client'
-
 import { UsersRepository } from '@/repositories/interfaces/usersRepository'
 import { createHashPassword } from '@/utils/createHashPassword'
 import { UserAlreadyExistsError } from './errors/userAlreadyExistsEmailError'
 import { ResourceNotFoundError } from './errors/resourceNotFound'
+import {
+  CreateUsersRequest,
+  CreateUsersResponse,
+  GetUserProfileRequest,
+  GetUserProfileResponse,
+  GetUsersProfilesResponse,
+  InterfaceUsersService,
+} from './interfaces/InterfaceUsersService'
 
-interface CreateUsersRequest {
-  name: string
-  email: string
-  password: string
-}
-
-interface CreateUsersResponse {
-  user: User
-}
-
-interface GetUserProfileRequest {
-  userId: string
-}
-
-interface GetUserProfileResponse {
-  user: User
-}
-
-interface GetUsersProfilesResponse {
-  users: User[]
-}
-
-export class UsersServices {
+export class UsersServices implements InterfaceUsersService {
   // SOLID
   // D - Dependency Inversion Principle
 

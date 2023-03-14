@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 
-import { AuthenticateService } from '@/services/authenticate'
+import { AuthenticateService } from '@/services/authenticateService'
 import { InvalidCredentialsError } from '@/services/errors/invalidCredentialsError'
 import { InterfaceAuthenticateController } from './interfaces/interfaceAuthenticateController'
 

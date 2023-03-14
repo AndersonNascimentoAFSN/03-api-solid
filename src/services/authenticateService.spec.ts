@@ -2,7 +2,7 @@ import { createHashPassword } from '../utils/createHashPassword'
 
 import { InMemoryUsersRepository } from '@/repositories/in-memory/inMemoryUsersRepository'
 import { describe, it, expect, beforeEach } from 'vitest'
-import { AuthenticateService } from './authenticate'
+import { AuthenticateService } from './authenticateService'
 import { InvalidCredentialsError } from './errors/invalidCredentialsError'
 
 let usersRepository: InMemoryUsersRepository

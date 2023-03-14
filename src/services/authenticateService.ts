@@ -1,19 +1,13 @@
-import { User } from '@prisma/client'
-
 import { UsersRepository } from '@/repositories/interfaces/usersRepository'
 import { InvalidCredentialsError } from './errors/invalidCredentialsError'
 import { compareHashPassword } from '@/utils/compareHashPassword'
+import {
+  AuthenticateServiceRequest,
+  AuthenticateServiceResponse,
+  InterfaceAuthenticateService,
+} from './interfaces/InterfaceAuthenticate'
 
-interface AuthenticateServiceRequest {
-  email: string
-  password: string
-}
-
-interface AuthenticateServiceRespose {
-  user: User
-}
-
-export class AuthenticateService {
+export class AuthenticateService implements InterfaceAuthenticateService {
   private usersRepository: UsersRepository
 
   constructor(usersRepository: UsersRepository) {
@@ -23,7 +17,7 @@ export class AuthenticateService {
   async authenticate({
     email,
     password,
-  }: AuthenticateServiceRequest): Promise<AuthenticateServiceRespose> {
+  }: AuthenticateServiceRequest): Promise<AuthenticateServiceResponse> {
     const user = await this.usersRepository.findUserByEmail({ email })
 
     if (!user) {
