@@ -61,7 +61,7 @@ export class UsersServices {
     return { user: userCreated }
   }
 
-  async GetUsersProfiles(): Promise<GetUsersProfilesResponse> {
+  async getUsersProfiles(): Promise<GetUsersProfilesResponse> {
     const users = await this.usersRepository.findUsers()
 
     return { users }

@@ -44,7 +44,7 @@ export class UsersController implements InterfaceUsersController {
   }
 
   async listUsers(_request: FastifyRequest, reply: FastifyReply) {
-    const users = await this.usersService.findUsers()
+    const users = await this.usersService.getUsersProfiles()
 
     return reply.status(200).send(users)
   }
