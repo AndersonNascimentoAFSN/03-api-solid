@@ -7,6 +7,7 @@ import {
   InterfaceCheckInService,
 } from './interfaces/InterfaceCheckInService'
 import { ResourceNotFoundError } from './errors/resourceNotFound'
+import { getDistanceBetweenCoordinates } from './utils/getDistanceBetweenCoordinates'
 
 export class CheckInService implements InterfaceCheckInService {
   private checkInRepository: CheckInsRepository
@@ -33,6 +34,19 @@ export class CheckInService implements InterfaceCheckInService {
     }
 
     // Calculate distance between user and gym
+    const distance = getDistanceBetweenCoordinates({
+      to: { latitude: userLatitude, longitude: userLongitude },
+      from: {
+        latitude: gym.latitude.toNumber(),
+        longitude: gym.longitude.toNumber(),
+      },
+    })
+
+    const MAX_DISTANCE_IN_KILOMETERS = 0.1 // 100 metros
+
+    if (distance > MAX_DISTANCE_IN_KILOMETERS) {
+      throw new Error()
+    }
 
     const checkInOnSameDay = await this.checkInRepository.findByUserIdOnDate({
       userId,
