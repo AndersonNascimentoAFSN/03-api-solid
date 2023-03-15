@@ -18,7 +18,5 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
   async findByUserIdOnDate({
     userId,
     date,
-  }: findByUserIdOnDateRequest): Promise<CheckIn | null> {
-    
-  }
+  }: findByUserIdOnDateRequest): Promise<CheckIn | null> {}
 }
