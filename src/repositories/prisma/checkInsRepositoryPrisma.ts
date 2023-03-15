@@ -1,6 +1,10 @@
 import { prisma } from '@/lib/prisma'
-import { Prisma } from '@prisma/client'
-import { CheckInsRepositoryInterface } from '../interfaces/checkInsRepository'
+import { CheckIn, Prisma } from '@prisma/client'
+
+import {
+  CheckInsRepositoryInterface,
+  findByUserIdOnDateRequest,
+} from '../interfaces/checkInsRepository'
 
 export class CheckInsRepository implements CheckInsRepositoryInterface {
   async createCheckIn(data: Prisma.CheckInUncheckedCreateInput) {
@@ -9,5 +13,12 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
     })
 
     return checkInCreatedData
+  }
+
+  async findByUserIdOnDate({
+    userId,
+    date,
+  }: findByUserIdOnDateRequest): Promise<CheckIn | null> {
+    
   }
 }

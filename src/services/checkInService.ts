@@ -17,6 +17,15 @@ export class CheckInService implements InterfaceCheckInService {
     userId,
     gymId,
   }: CheckInServiceRequest): Promise<CheckInServiceResponse> {
+    const checkInOnSameDay = await this.checkInRepository.findByUserIdOnDate({
+      userId,
+      date: new Date(),
+    })
+
+    if (checkInOnSameDay) {
+      throw new Error()
+    }
+
     const checkIn = await this.checkInRepository.createCheckIn({
       user_id: userId,
       gym_id: gymId,
