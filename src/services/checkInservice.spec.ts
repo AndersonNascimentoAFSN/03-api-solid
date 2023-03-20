@@ -97,7 +97,7 @@ describe('CheckIn Service', () => {
   })
 
   it('should not be able to check in on distant gym', async () => {
-    gymsRepository.items.push({
+    gymsRepository.createGym({
       id: 'gym-02',
       title: 'JavaScript Gym',
       description: '',
@@ -114,5 +114,28 @@ describe('CheckIn Service', () => {
         userLongitude: -49.6401091,
       }),
     ).rejects.toBeInstanceOf(MaxDistanceError)
+  })
+
+  it('should be able to fetch check-in history', async () => {
+    await checkInRepository.createCheckIn({
+      gym_id: 'gym_01',
+      user_id: 'user-01',
+    })
+
+    await checkInRepository.createCheckIn({
+      gym_id: 'gym_02',
+      user_id: 'user-01',
+    })
+
+    const { checkIns } = await checkInService.fetchUserCheckInsHistory({
+      userId: 'user-01',
+      page: 1,
+    })
+
+    expect(checkIns).toHaveLength(2)
+    expect(checkIns).toEqual([
+      expect.objectContaining({ gym_id: 'gym_01' }),
+      expect.objectContaining({ gym_id: 'gym_02' }),
+    ])
   })
 })

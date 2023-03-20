@@ -4,6 +4,8 @@ import { CheckInsRepository } from '@/repositories/prisma/checkInsRepositoryPris
 import {
   CheckInServiceRequest,
   CheckInServiceResponse,
+  fetchUserCheckInsHistoryRequest,
+  fetchUserCheckInsHistoryResponse,
   InterfaceCheckInService,
 } from './interfaces/InterfaceCheckInService'
 import { ResourceNotFoundError } from './errors/resourceNotFound'
@@ -66,6 +68,19 @@ export class CheckInService implements InterfaceCheckInService {
 
     return {
       checkIn,
+    }
+  }
+
+  async fetchUserCheckInsHistory({
+    userId,
+    page,
+  }: fetchUserCheckInsHistoryRequest): Promise<fetchUserCheckInsHistoryResponse> {
+    const checkIns = await this.checkInRepository.findManyCheckInsByUserId({
+      userId,
+    })
+
+    return {
+      checkIns,
     }
   }
 }

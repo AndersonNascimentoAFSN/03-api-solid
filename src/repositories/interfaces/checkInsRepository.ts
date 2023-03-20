@@ -5,8 +5,17 @@ export type findByUserIdOnDateRequest = {
   date: Date
 }
 
+export type findManyCheckInsByUserIdRequest = {
+  userId: string
+}
+
 export interface CheckInsRepositoryInterface {
   createCheckIn(data: Prisma.CheckInUncheckedCreateInput): Promise<CheckIn>
+
+  findManyCheckInsByUserId({
+    userId,
+  }: findManyCheckInsByUserIdRequest): Promise<CheckIn[]>
+
   findByUserIdOnDate({
     userId,
     date,

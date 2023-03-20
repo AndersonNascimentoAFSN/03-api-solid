@@ -4,6 +4,7 @@ import { CheckIn, Prisma } from '@prisma/client'
 import {
   CheckInsRepositoryInterface,
   findByUserIdOnDateRequest,
+  findManyCheckInsByUserIdRequest,
 } from '../interfaces/checkInsRepository'
 
 export class CheckInsRepository implements CheckInsRepositoryInterface {
@@ -19,4 +20,8 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
     userId,
     date,
   }: findByUserIdOnDateRequest): Promise<CheckIn | null> {}
+
+  async findManyCheckInsByUserId({
+    userId,
+  }: findManyCheckInsByUserIdRequest): Promise<CheckIn[]> {}
 }
