@@ -158,4 +158,22 @@ describe('CheckIn Service', () => {
       expect.objectContaining({ gym_id: 'gym-22' }),
     ])
   })
+
+  it('should be able to get check-ins count from metrics', async () => {
+    await checkInRepository.createCheckIn({
+      gym_id: 'gym_01',
+      user_id: 'user-01',
+    })
+
+    await checkInRepository.createCheckIn({
+      gym_id: 'gym_02',
+      user_id: 'user-01',
+    })
+
+    const { checkInsCount } = await checkInService.getUserMetrics({
+      userId: 'user-01',
+    })
+
+    expect(checkInsCount).toEqual(2)
+  })
 })

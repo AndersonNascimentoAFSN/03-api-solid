@@ -1,13 +1,17 @@
 import { CheckIn, Prisma } from '@prisma/client'
 
-export type findByUserIdOnDateRequest = {
+export type FindByUserIdOnDateRequest = {
   userId: string
   date: Date
 }
 
-export type findManyCheckInsByUserIdRequest = {
+export type FindManyCheckInsByUserIdRequest = {
   userId: string
   page: number
+}
+
+export type CountByUserIdRequest = {
+  userId: string
 }
 
 export interface CheckInsRepositoryInterface {
@@ -16,10 +20,12 @@ export interface CheckInsRepositoryInterface {
   findManyCheckInsByUserId({
     userId,
     page,
-  }: findManyCheckInsByUserIdRequest): Promise<CheckIn[]>
+  }: FindManyCheckInsByUserIdRequest): Promise<CheckIn[]>
 
   findByUserIdOnDate({
     userId,
     date,
-  }: findByUserIdOnDateRequest): Promise<CheckIn | null>
+  }: FindByUserIdOnDateRequest): Promise<CheckIn | null>
+
+  countByUserId({ userId }: CountByUserIdRequest): Promise<number>
 }

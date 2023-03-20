@@ -20,6 +20,14 @@ export type fetchUserCheckInsHistoryResponse = {
   checkIns: CheckIn[]
 }
 
+export type GetUserMetricsRequest = {
+  userId: string
+}
+
+export type GetUserMetricsResponse = {
+  checkInsCount: number
+}
+
 export interface InterfaceCheckInService {
   checkIn({
     userId,
@@ -30,4 +38,8 @@ export interface InterfaceCheckInService {
     userId,
     page,
   }: fetchUserCheckInsHistoryRequest): Promise<fetchUserCheckInsHistoryResponse>
+
+  getUserMetrics({
+    userId,
+  }: GetUserMetricsRequest): Promise<GetUserMetricsResponse>
 }

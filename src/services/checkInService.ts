@@ -6,6 +6,8 @@ import {
   CheckInServiceResponse,
   fetchUserCheckInsHistoryRequest,
   fetchUserCheckInsHistoryResponse,
+  GetUserMetricsRequest,
+  GetUserMetricsResponse,
   InterfaceCheckInService,
 } from './interfaces/InterfaceCheckInService'
 import { ResourceNotFoundError } from './errors/resourceNotFound'
@@ -82,6 +84,18 @@ export class CheckInService implements InterfaceCheckInService {
 
     return {
       checkIns,
+    }
+  }
+
+  async getUserMetrics({
+    userId,
+  }: GetUserMetricsRequest): Promise<GetUserMetricsResponse> {
+    const checkInsCount = await this.checkInRepository.countByUserId({
+      userId,
+    })
+
+    return {
+      checkInsCount,
     }
   }
 }

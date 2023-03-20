@@ -3,6 +3,7 @@ import { CheckIn, Prisma } from '@prisma/client'
 
 import {
   CheckInsRepositoryInterface,
+  CountByUserIdRequest,
   findByUserIdOnDateRequest,
   findManyCheckInsByUserIdRequest,
 } from '../interfaces/checkInsRepository'
@@ -25,4 +26,6 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
     userId,
     page,
   }: findManyCheckInsByUserIdRequest): Promise<CheckIn[]> {}
+
+  async countByUserId({ userId }: CountByUserIdRequest): Promise<number> {}
 }
