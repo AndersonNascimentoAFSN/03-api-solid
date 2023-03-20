@@ -23,5 +23,6 @@ export class CheckInsRepository implements CheckInsRepositoryInterface {
 
   async findManyCheckInsByUserId({
     userId,
+    page,
   }: findManyCheckInsByUserIdRequest): Promise<CheckIn[]> {}
 }

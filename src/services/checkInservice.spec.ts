@@ -138,4 +138,24 @@ describe('CheckIn Service', () => {
       expect.objectContaining({ gym_id: 'gym_02' }),
     ])
   })
+
+  it('should be able to fetch paginated check-in history', async () => {
+    for (let index = 1; index <= 22; index += 1) {
+      await checkInRepository.createCheckIn({
+        gym_id: `gym-${index}`,
+        user_id: 'user-01',
+      })
+    }
+
+    const { checkIns } = await checkInService.fetchUserCheckInsHistory({
+      userId: 'user-01',
+      page: 2,
+    })
+
+    expect(checkIns).toHaveLength(2)
+    expect(checkIns).toEqual([
+      expect.objectContaining({ gym_id: 'gym-21' }),
+      expect.objectContaining({ gym_id: 'gym-22' }),
+    ])
+  })
 })

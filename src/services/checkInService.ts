@@ -77,6 +77,7 @@ export class CheckInService implements InterfaceCheckInService {
   }: fetchUserCheckInsHistoryRequest): Promise<fetchUserCheckInsHistoryResponse> {
     const checkIns = await this.checkInRepository.findManyCheckInsByUserId({
       userId,
+      page,
     })
 
     return {

@@ -7,6 +7,7 @@ export type findByUserIdOnDateRequest = {
 
 export type findManyCheckInsByUserIdRequest = {
   userId: string
+  page: number
 }
 
 export interface CheckInsRepositoryInterface {
@@ -14,6 +15,7 @@ export interface CheckInsRepositoryInterface {
 
   findManyCheckInsByUserId({
     userId,
+    page,
   }: findManyCheckInsByUserIdRequest): Promise<CheckIn[]>
 
   findByUserIdOnDate({
