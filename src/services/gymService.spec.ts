@@ -32,4 +32,63 @@ describe('gym Service', () => {
   })
 
   // list gym by id
+
+  it('should be able to search for gyms', async () => {
+    await gymsService.createGym({
+      title: 'JavaScript Gym',
+      description: null,
+      phone: null,
+      latitude: -27.2092052,
+      longitude: -49.6401091,
+    })
+
+    await gymsService.createGym({
+      title: 'TypeScript Gym',
+      description: null,
+      phone: null,
+      latitude: -27.2092052,
+      longitude: -49.6401091,
+    })
+
+    const { gyms } = await gymsService.searchGyms({
+      query: 'JavaScript',
+      page: 1,
+    })
+
+    expect(gyms).toHaveLength(1)
+
+    expect(gyms).toEqual([
+      expect.objectContaining({
+        title: 'JavaScript Gym',
+      }),
+    ])
+  })
+
+  it('should be able to search paginated for gyms', async () => {
+    for (let index = 1; index <= 22; index += 1) {
+      await gymsService.createGym({
+        title: `JavaScript Gym-${index}`,
+        description: null,
+        phone: null,
+        latitude: -27.2092052,
+        longitude: -49.6401091,
+      })
+    }
+
+    const { gyms } = await gymsService.searchGyms({
+      query: 'JavaScript',
+      page: 2,
+    })
+
+    expect(gyms).toHaveLength(2)
+
+    expect(gyms).toEqual([
+      expect.objectContaining({
+        title: 'JavaScript Gym-21',
+      }),
+      expect.objectContaining({
+        title: 'JavaScript Gym-22',
+      }),
+    ])
+  })
 })

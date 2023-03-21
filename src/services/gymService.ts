@@ -3,6 +3,8 @@ import {
   CreateGymRequest,
   CreateGymResponse,
   InterfaceGymService,
+  SearchGymsRequest,
+  SearchGymsResponse,
 } from './interfaces/InterfaceGymService'
 
 export class GymServices implements InterfaceGymService {
@@ -29,6 +31,17 @@ export class GymServices implements InterfaceGymService {
 
     return {
       gym,
+    }
+  }
+
+  async searchGyms({
+    query,
+    page,
+  }: SearchGymsRequest): Promise<SearchGymsResponse> {
+    const gyms = await this.gymsRepository.searchMany({ query, page })
+
+    return {
+      gyms,
     }
   }
 }

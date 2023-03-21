@@ -1,4 +1,7 @@
-import { GymsRepository } from '@/repositories/interfaces/gymsRepository'
+import {
+  GymsRepository,
+  SearchManyRequest,
+} from '@/repositories/interfaces/gymsRepository'
 import { prisma } from '@/lib/prisma'
 import { Gym, Prisma } from '@prisma/client'
 
@@ -18,4 +21,6 @@ export class GymsRepositoryPrisma implements GymsRepository {
 
     return gym
   }
+
+  async searchMany({ query, page }: SearchManyRequest): Promise<Gym[]> {}
 }

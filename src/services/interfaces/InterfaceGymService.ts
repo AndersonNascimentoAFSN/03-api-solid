@@ -12,6 +12,15 @@ export type CreateGymResponse = {
   gym: Gym
 }
 
+export type SearchGymsRequest = {
+  query: string
+  page: number
+}
+
+export type SearchGymsResponse = {
+  gyms: Gym[]
+}
+
 export interface InterfaceGymService {
   createGym({
     title,
@@ -20,4 +29,6 @@ export interface InterfaceGymService {
     latitude,
     longitude,
   }: CreateGymRequest): Promise<CreateGymResponse>
+
+  searchGyms({ query }: SearchGymsRequest): Promise<SearchGymsResponse>
 }
