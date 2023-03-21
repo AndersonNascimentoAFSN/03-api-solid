@@ -2,6 +2,8 @@ import { GymsRepositoryPrisma } from '@/repositories/prisma/gymsRepositoryPrisma
 import {
   CreateGymRequest,
   CreateGymResponse,
+  FetchNearbyGymsRequest,
+  FetchNearbyGymsResponse,
   InterfaceGymService,
   SearchGymsRequest,
   SearchGymsResponse,
@@ -39,6 +41,20 @@ export class GymServices implements InterfaceGymService {
     page,
   }: SearchGymsRequest): Promise<SearchGymsResponse> {
     const gyms = await this.gymsRepository.searchMany({ query, page })
+
+    return {
+      gyms,
+    }
+  }
+
+  async fetchNearbyGyms({
+    userLatitude,
+    userLongitude,
+  }: FetchNearbyGymsRequest): Promise<FetchNearbyGymsResponse> {
+    const gyms = await this.gymsRepository.findManyNearby({
+      latitude: userLatitude,
+      longitude: userLongitude,
+    })
 
     return {
       gyms,

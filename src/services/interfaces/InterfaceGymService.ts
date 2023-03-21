@@ -21,6 +21,15 @@ export type SearchGymsResponse = {
   gyms: Gym[]
 }
 
+export type FetchNearbyGymsRequest = {
+  userLatitude: number
+  userLongitude: number
+}
+
+export type FetchNearbyGymsResponse = {
+  gyms: Gym[]
+}
+
 export interface InterfaceGymService {
   createGym({
     title,
@@ -31,4 +40,9 @@ export interface InterfaceGymService {
   }: CreateGymRequest): Promise<CreateGymResponse>
 
   searchGyms({ query }: SearchGymsRequest): Promise<SearchGymsResponse>
+
+  fetchNearbyGyms({
+    userLatitude,
+    userLongitude,
+  }: FetchNearbyGymsRequest): Promise<FetchNearbyGymsResponse>
 }

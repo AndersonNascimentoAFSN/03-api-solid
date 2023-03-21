@@ -1,4 +1,5 @@
 import {
+  FindManyNearbyRequest,
   GymsRepository,
   SearchManyRequest,
 } from '@/repositories/interfaces/gymsRepository'
@@ -23,4 +24,9 @@ export class GymsRepositoryPrisma implements GymsRepository {
   }
 
   async searchMany({ query, page }: SearchManyRequest): Promise<Gym[]> {}
+
+  async findManyNearby({
+    latitude,
+    longitude,
+  }: FindManyNearbyRequest): Promise<Gym[]> {}
 }
