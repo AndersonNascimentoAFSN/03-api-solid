@@ -7,6 +7,7 @@ import { CheckInService } from './checkInService'
 import { MaxNumberOfCheckInsError } from './errors/max-number-of-check-ins-error'
 import { MaxDistanceError } from './errors/max-distance.error'
 import { ResourceNotFoundError } from './errors/resourceNotFound'
+import { LateCheckInValidationError } from './errors/late-check-in-validation-error'
 
 let checkInRepository: InMemoryCheckInRepository
 let gymsRepository: InMemoryGymsRepository
@@ -197,5 +198,24 @@ describe('CheckIn Service', () => {
         checkInId: 'inexistent-id',
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError)
+  })
+
+  it('should not be able to validate the check-in after 20 minutes of its creation', async () => {
+    vi.setSystemTime(new Date(2023, 0, 1, 13, 40))
+
+    const createdCheckIn = await checkInRepository.createCheckIn({
+      gym_id: 'gym-01',
+      user_id: 'user-01',
+    })
+
+    const twentyOneMinutesInMs = 1000 * 60 * 21
+
+    vi.advanceTimersByTime(twentyOneMinutesInMs)
+
+    await expect(() =>
+      checkInService.validadeCheckIn({
+        checkInId: createdCheckIn.id,
+      }),
+    ).rejects.toBeInstanceOf(LateCheckInValidationError)
   })
 })
