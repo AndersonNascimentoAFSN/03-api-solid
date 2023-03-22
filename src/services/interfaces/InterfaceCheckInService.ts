@@ -28,6 +28,14 @@ export type GetUserMetricsResponse = {
   checkInsCount: number
 }
 
+export type ValidateCheckInRequest = {
+  checkInId: string
+}
+
+export type ValidateCheckInResponse = {
+  checkIn: CheckIn
+}
+
 export interface InterfaceCheckInService {
   checkIn({
     userId,
@@ -42,4 +50,8 @@ export interface InterfaceCheckInService {
   getUserMetrics({
     userId,
   }: GetUserMetricsRequest): Promise<GetUserMetricsResponse>
+
+  validadeCheckIn({
+    checkInId,
+  }: ValidateCheckInRequest): Promise<ValidateCheckInResponse>
 }

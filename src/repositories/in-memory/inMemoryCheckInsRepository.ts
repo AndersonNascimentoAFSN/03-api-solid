@@ -6,6 +6,8 @@ import {
   FindManyCheckInsByUserIdRequest,
   FindByUserIdOnDateRequest,
   CountByUserIdRequest,
+  FindByIdRequest,
+  SaveCheckInRquest,
 } from '../interfaces/checkInsRepository'
 
 export class InMemoryCheckInRepository implements CheckInsRepositoryInterface {
@@ -58,5 +60,25 @@ export class InMemoryCheckInRepository implements CheckInsRepositoryInterface {
 
   async countByUserId({ userId }: CountByUserIdRequest) {
     return this.items.filter((item) => (item.user_id = userId)).length
+  }
+
+  async findById({ checkInId }: FindByIdRequest) {
+    const checkIn = this.items.find((item) => (item.id = checkInId))
+
+    if (!checkIn) {
+      return null
+    }
+
+    return checkIn
+  }
+
+  async saveCheckIn({ checkIn }: SaveCheckInRquest) {
+    const checkIndex = this.items.findIndex((item) => item.id === checkIn.id)
+
+    if (checkIndex >= 0) {
+      this.items[checkIndex] = checkIn
+    }
+
+    return checkIn
   }
 }

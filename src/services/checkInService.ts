@@ -9,6 +9,8 @@ import {
   GetUserMetricsRequest,
   GetUserMetricsResponse,
   InterfaceCheckInService,
+  ValidateCheckInRequest,
+  ValidateCheckInResponse,
 } from './interfaces/InterfaceCheckInService'
 import { ResourceNotFoundError } from './errors/resourceNotFound'
 import { getDistanceBetweenCoordinates } from './utils/getDistanceBetweenCoordinates'
@@ -96,6 +98,24 @@ export class CheckInService implements InterfaceCheckInService {
 
     return {
       checkInsCount,
+    }
+  }
+
+  async validadeCheckIn({
+    checkInId,
+  }: ValidateCheckInRequest): Promise<ValidateCheckInResponse> {
+    const checkIn = await this.checkInRepository.findById({ checkInId })
+
+    if (!checkIn) {
+      throw new ResourceNotFoundError()
+    }
+
+    checkIn.validated_at = new Date()
+
+    await this.checkInRepository.saveCheckIn({ checkIn })
+
+    return {
+      checkIn,
     }
   }
 }

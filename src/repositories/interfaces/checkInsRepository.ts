@@ -14,6 +14,14 @@ export type CountByUserIdRequest = {
   userId: string
 }
 
+export type FindByIdRequest = {
+  checkInId: string
+}
+
+export type SaveCheckInRquest = {
+  checkIn: CheckIn
+}
+
 export interface CheckInsRepositoryInterface {
   createCheckIn(data: Prisma.CheckInUncheckedCreateInput): Promise<CheckIn>
 
@@ -28,4 +36,8 @@ export interface CheckInsRepositoryInterface {
   }: FindByUserIdOnDateRequest): Promise<CheckIn | null>
 
   countByUserId({ userId }: CountByUserIdRequest): Promise<number>
+
+  findById({ checkInId }: FindByIdRequest): Promise<CheckIn | null>
+
+  saveCheckIn({ checkIn }: SaveCheckInRquest): Promise<CheckIn>
 }
