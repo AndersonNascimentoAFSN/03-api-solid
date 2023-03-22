@@ -1,10 +1,12 @@
+import { Gym, Prisma } from '@prisma/client'
+
 import {
   FindManyNearbyRequest,
   GymsRepository,
   SearchManyRequest,
 } from '@/repositories/interfaces/gymsRepository'
+
 import { prisma } from '@/lib/prisma'
-import { Gym, Prisma } from '@prisma/client'
 
 export class GymsRepositoryPrisma implements GymsRepository {
   async createGym(data: Prisma.GymCreateInput) {
@@ -24,13 +26,28 @@ export class GymsRepositoryPrisma implements GymsRepository {
   }
 
   async searchMany({ query, page }: SearchManyRequest): Promise<Gym[]> {
-    throw new Error('Not implemented')
+    const gyms = await prisma.gym.findMany({
+      where: {
+        title: {
+          contains: query,
+        },
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+    })
+
+    return gyms
   }
 
   async findManyNearby({
     latitude,
     longitude,
   }: FindManyNearbyRequest): Promise<Gym[]> {
-    throw new Error('Not implemented')
+    const gyms = await prisma.$queryRaw<Gym[]>`
+      SELECT * from gyms
+      WHERE ( 6371 * acos( cos( radians(${latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${longitude}) ) + sin( radians(${latitude}) ) * sin( radians( latitude ) ) ) ) <= 10
+    `
+
+    return gyms
   }
 }
