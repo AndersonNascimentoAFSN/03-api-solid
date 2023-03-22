@@ -7,7 +7,7 @@ import {
   FindByUserIdOnDateRequest,
   CountByUserIdRequest,
   FindByIdRequest,
-  SaveCheckInRquest,
+  SaveCheckInRequest,
 } from '../interfaces/checkInsRepository'
 
 export class InMemoryCheckInRepository implements CheckInsRepositoryInterface {
@@ -72,7 +72,7 @@ export class InMemoryCheckInRepository implements CheckInsRepositoryInterface {
     return checkIn
   }
 
-  async saveCheckIn({ checkIn }: SaveCheckInRquest) {
+  async saveCheckIn({ checkIn }: SaveCheckInRequest) {
     const checkIndex = this.items.findIndex((item) => item.id === checkIn.id)
 
     if (checkIndex >= 0) {

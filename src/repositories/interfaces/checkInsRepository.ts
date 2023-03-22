@@ -18,7 +18,7 @@ export type FindByIdRequest = {
   checkInId: string
 }
 
-export type SaveCheckInRquest = {
+export type SaveCheckInRequest = {
   checkIn: CheckIn
 }
 
@@ -39,5 +39,5 @@ export interface CheckInsRepositoryInterface {
 
   findById({ checkInId }: FindByIdRequest): Promise<CheckIn | null>
 
-  saveCheckIn({ checkIn }: SaveCheckInRquest): Promise<CheckIn>
+  saveCheckIn({ checkIn }: SaveCheckInRequest): Promise<CheckIn>
 }

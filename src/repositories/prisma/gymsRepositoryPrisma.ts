@@ -23,10 +23,14 @@ export class GymsRepositoryPrisma implements GymsRepository {
     return gym
   }
 
-  async searchMany({ query, page }: SearchManyRequest): Promise<Gym[]> {}
+  async searchMany({ query, page }: SearchManyRequest): Promise<Gym[]> {
+    throw new Error('Not implemented')
+  }
 
   async findManyNearby({
     latitude,
     longitude,
-  }: FindManyNearbyRequest): Promise<Gym[]> {}
+  }: FindManyNearbyRequest): Promise<Gym[]> {
+    throw new Error('Not implemented')
+  }
 }
