@@ -10,7 +10,7 @@ app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 })
 
-app.register(appRoutes)
+app.register(appRoutes, { prefix: '/v1' })
 
 app.setErrorHandler(
   (error: FastifyError, _request: FastifyRequest, reply: FastifyReply) => {
