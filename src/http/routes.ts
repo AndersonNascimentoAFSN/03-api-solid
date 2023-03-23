@@ -1,6 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { makeAuthenticateController } from './controllers/factories/makeAuthenticateController'
 import { makeUsersController } from './controllers/factories/makeUsersController'
+import { verifyJWT } from './middlewares/verify-jwt'
 
 // import { makeGymController } from './controllers/factories/make-gym-controller'
 // import { makeCheckInController } from './controllers/factories/make-check-in-controller'
@@ -17,8 +18,10 @@ export async function appRoutes(app: FastifyInstance) {
   )
 
   /* Authenticated */
-
-  app.get('/users', (req, reply) => usersController.listUsers(req, reply))
-
-  app.get('/profile', (req, reply) => usersController.profile(req, reply))
+  app.get('/users', { onRequest: [verifyJWT] }, (req, reply) =>
+    usersController.listUsers(req, reply),
+  )
+  app.get('/profile', { onRequest: [verifyJWT] }, (req, reply) =>
+    usersController.profile(req, reply),
+  )
 }

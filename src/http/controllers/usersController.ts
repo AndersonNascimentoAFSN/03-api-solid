@@ -52,8 +52,14 @@ export class UsersController implements InterfaceUsersController {
   async profile(request: FastifyRequest, reply: FastifyReply) {
     try {
       await request.jwtVerify()
-      console.log(request.user.sub)
-      return reply.status(200).send()
+
+      const { user } = await this.usersService.getUserProfile({
+        userId: request.user.sub,
+      })
+
+      return reply
+        .status(200)
+        .send({ user: { ...user, password_hash: undefined } })
     } catch (error) {}
   }
 }
