@@ -48,4 +48,12 @@ export class UsersController implements InterfaceUsersController {
 
     return reply.status(200).send(users)
   }
+
+  async profile(request: FastifyRequest, reply: FastifyReply) {
+    try {
+      await request.jwtVerify()
+      console.log(request.user.sub)
+      return reply.status(200).send()
+    } catch (error) {}
+  }
 }

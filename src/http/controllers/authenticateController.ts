@@ -21,10 +21,19 @@ export class AuthenticateController implements InterfaceAuthenticateController {
     const { email, password } = authenticateBodySchema.parse(request.body)
 
     try {
-      await this.authenticateService.authenticate({
+      const { user } = await this.authenticateService.authenticate({
         email,
         password,
       })
+
+      const token = await reply.jwtSign(
+        {},
+        {
+          sign: { sub: user.id },
+        },
+      )
+
+      return reply.status(200).send({ token })
     } catch (error) {
       if (error instanceof InvalidCredentialsError) {
         return reply.status(400).send({
@@ -36,7 +45,5 @@ export class AuthenticateController implements InterfaceAuthenticateController {
 
       throw error
     }
-
-    return reply.status(200).send()
   }
 }

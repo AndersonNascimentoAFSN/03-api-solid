@@ -19,4 +19,6 @@ export async function appRoutes(app: FastifyInstance) {
   /* Authenticated */
 
   app.get('/users', (req, reply) => usersController.listUsers(req, reply))
+
+  app.get('/profile', (req, reply) => usersController.profile(req, reply))
 }
