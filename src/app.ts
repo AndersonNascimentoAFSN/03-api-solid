@@ -4,6 +4,7 @@ import { ZodError } from 'zod'
 import { env } from './env'
 import { appRoutes } from './http/routes'
 import { usersRoutes } from './http/controllers/users/usersRoutes'
+import { gymsRoutes } from './http/controllers/gyms/gymsRoutes'
 
 export const app = fastify()
 
@@ -13,6 +14,7 @@ app.register(fastifyJwt, {
 
 app.register(appRoutes, { prefix: '/v1' })
 app.register(usersRoutes, { prefix: '/v1' })
+app.register(gymsRoutes, { prefix: '/v1' })
 
 app.setErrorHandler(
   (error: FastifyError, _request: FastifyRequest, reply: FastifyReply) => {
