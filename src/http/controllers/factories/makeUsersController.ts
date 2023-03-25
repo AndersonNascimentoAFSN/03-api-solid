@@ -1,4 +1,4 @@
-import { UsersController } from '../usersController'
+import { UsersController } from '../users/usersController'
 import { makeUsersService } from '@/services/factories/makeUsersService'
 
 export function makeUsersController() {

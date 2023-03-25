@@ -1,9 +1,9 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 
-import { UsersServices } from '../../services/usersServices'
+import { UsersServices } from '../../../services/usersServices'
 import { UserAlreadyExistsError } from '@/services/errors/userAlreadyExistsEmailError'
-import { InterfaceUsersController } from './interfaces/interfaceUsersController'
+import { InterfaceUsersController } from '../interfaces/interfaceUsersController'
 
 export class UsersController implements InterfaceUsersController {
   private usersService: UsersServices

@@ -3,4 +3,6 @@ import { FastifyReply, FastifyRequest } from 'fastify'
 
 export interface InterfaceGymController {
   listGyms(request: FastifyRequest, reply: FastifyReply): Promise<Gym[]>
+
+  createGym(request: FastifyRequest, reply: FastifyReply): Promise<Gym>
 }
