@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { AuthenticateService } from '@/services/authenticateService'
 import { InvalidCredentialsError } from '@/services/errors/invalidCredentialsError'
-import { InterfaceAuthenticateController } from './interfaces/interfaceAuthenticateController'
+import { InterfaceAuthenticateController } from './interface/interfaceAuthenticateController'
 
 export class AuthenticateController implements InterfaceAuthenticateController {
   private authenticateService: AuthenticateService

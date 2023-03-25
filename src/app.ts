@@ -6,6 +6,7 @@ import { appRoutes } from './http/routes'
 import { usersRoutes } from './http/controllers/users/usersRoutes'
 import { gymsRoutes } from './http/controllers/gyms/gymsRoutes'
 import { checkInsRoutes } from './http/controllers/check-ins/checkInsRoutes'
+import { authenticateRoutes } from './http/controllers/authenticate/authenticateRoutes'
 
 export const app = fastify()
 
@@ -13,10 +14,14 @@ app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 })
 
+// Not authenticated Routes
 app.register(appRoutes, { prefix: '/v1' })
+
+// Authenticated Routes
 app.register(usersRoutes, { prefix: '/v1' })
 app.register(gymsRoutes, { prefix: '/v1' })
 app.register(checkInsRoutes, { prefix: '/v1' })
+app.register(authenticateRoutes, { prefix: '/v1' })
 
 app.setErrorHandler(
   (error: FastifyError, _request: FastifyRequest, reply: FastifyReply) => {
