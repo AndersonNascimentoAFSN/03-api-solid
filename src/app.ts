@@ -5,6 +5,7 @@ import { env } from './env'
 import { appRoutes } from './http/routes'
 import { usersRoutes } from './http/controllers/users/usersRoutes'
 import { gymsRoutes } from './http/controllers/gyms/gymsRoutes'
+import { checkInsRoutes } from './http/controllers/check-ins/checkInsRoutes'
 
 export const app = fastify()
 
@@ -15,6 +16,7 @@ app.register(fastifyJwt, {
 app.register(appRoutes, { prefix: '/v1' })
 app.register(usersRoutes, { prefix: '/v1' })
 app.register(gymsRoutes, { prefix: '/v1' })
+app.register(checkInsRoutes, { prefix: '/v1' })
 
 app.setErrorHandler(
   (error: FastifyError, _request: FastifyRequest, reply: FastifyReply) => {

@@ -1,4 +1,4 @@
-import { GymController } from '../gyms/gym-controller'
+import { GymController } from '../gym-controller'
 import { makeGymService } from '@/services/factories/make-gym-service'
 
 export function makeGymController() {

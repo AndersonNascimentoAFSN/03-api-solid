@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { verifyJWT } from '../../middlewares/verify-jwt'
-import { makeGymController } from '../factories/make-gym-controller'
+import { makeGymController } from './factory/make-gym-controller'
 
 export async function gymsRoutes(app: FastifyInstance) {
   const gymController = makeGymController()
@@ -8,7 +8,7 @@ export async function gymsRoutes(app: FastifyInstance) {
   /* Authenticated */
   app.addHook('onRequest', verifyJWT)
 
-  app.get('/gyms', (req, reply) => gymController.createGym(req, reply))
+  app.post('/gyms', (req, reply) => gymController.createGym(req, reply))
 
   app.get('/gyms/search', (req, reply) => gymController.searchGyms(req, reply))
 

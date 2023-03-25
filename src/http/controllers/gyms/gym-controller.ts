@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from 'fastify'
 import { z } from 'zod'
 
-import { InterfaceGymController } from '../interfaces/interface-gym-controller'
+import { InterfaceGymController } from './interface/interface-gym-controller'
 import { GymServices } from '@/services/gymService'
 
 export class GymController implements InterfaceGymController {
@@ -20,7 +20,7 @@ export class GymController implements InterfaceGymController {
         return Math.abs(value) <= 90
       }),
       longitude: z.number().refine((value) => {
-        return Math.abs(value) <= 90
+        return Math.abs(value) <= 180
       }),
     })
 
@@ -44,7 +44,7 @@ export class GymController implements InterfaceGymController {
       page: z.coerce.number().min(1).default(1),
     })
 
-    const { q, page } = searchGymsQuerySchema.parse(request.body)
+    const { q, page } = searchGymsQuerySchema.parse(request.query)
 
     const { gyms } = await this.gymService.searchGyms({
       query: q,
@@ -62,12 +62,12 @@ export class GymController implements InterfaceGymController {
         return Math.abs(value) <= 90
       }),
       longitude: z.number().refine((value) => {
-        return Math.abs(value) <= 90
+        return Math.abs(value) <= 180
       }),
     })
 
     const { latitude, longitude } = nearByGymsQueryBodySchema.parse(
-      request.body,
+      request.query,
     )
 
     const { gyms } = await this.gymService.fetchNearbyGyms({
