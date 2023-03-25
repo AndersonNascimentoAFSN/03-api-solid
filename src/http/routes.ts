@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify'
 import { makeAuthenticateController } from './controllers/factories/makeAuthenticateController'
-import { makeUsersController } from './controllers/factories/makeUsersController'
+import { makeUsersController } from './controllers/users/factory/makeUsersController'
 // import { makeCheckInController } from './controllers/factories/make-check-in-controller'
 
 export async function appRoutes(app: FastifyInstance) {

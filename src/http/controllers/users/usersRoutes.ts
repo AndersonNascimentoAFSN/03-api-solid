@@ -1,5 +1,5 @@
 import { FastifyInstance } from 'fastify'
-import { makeUsersController } from '../../controllers/factories/makeUsersController'
+import { makeUsersController } from './factory/makeUsersController'
 import { verifyJWT } from '../../middlewares/verify-jwt'
 
 export async function usersRoutes(app: FastifyInstance) {
